@@ -1,7 +1,5 @@
 extends Node3D
 
-
-
 var score = 0
 var ring_speed = 0.1
 
@@ -12,10 +10,12 @@ func change_speed():
 		ring.change_speed(ring_speed)
 	print("ring_speed :",ring_speed)
 
-
 func changeScore():
 	score += 1
 	$CanvasLayer/scr_game/label_score.text = str(score)
+
+func start_game():
+	pass
 
 func end_game():
 	$rings.process_mode = Node.PROCESS_MODE_DISABLED
