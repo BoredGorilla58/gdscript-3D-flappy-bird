@@ -1,3 +1,89 @@
-[gd_scene format=3 uid="uid://yhanprnr6qlm"]
+[gd_scene load_steps=10 format=3 uid="uid://yhanprnr6qlm"]
+
+[ext_resource type="Script" uid="uid://b42ojhn6o1a2x" path="res://main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bi5cpvsm7j33w" path="res://obj_bird.tscn" id="3_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://qj6t4vjjoelq" path="res://obj_ring.tscn" id="3_h2yge"]
+[ext_resource type="Script" uid="uid://js352xnb30a2" path="res://camera_3d.gd" id="4_1bvp3"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1bvp3"]
+font_size = 161
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_h2yge"]
+ground_bottom_color = Color(0.719263, 0.839979, 0.815089, 1)
+ground_horizon_color = Color(0.520043, 0.751394, 0.884058, 1)
+
+[sub_resource type="Sky" id="Sky_1bvp3"]
+sky_material = SubResource("ProceduralSkyMaterial_h2yge")
+
+[sub_resource type="Environment" id="Environment_lquwl"]
+background_mode = 2
+sky = SubResource("Sky_1bvp3")
+fog_enabled = true
+fog_mode = 1
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 1.0
+fog_depth_curve = 0.757859
+fog_depth_end = 30.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_1bvp3"]
+size = Vector2(30, 30)
 
 [node name="Main" type="Node3D"]
+script = ExtResource("1_h2yge")
+
+[node name="rings" type="Node3D" parent="."]
+
+[node name="obj_ring" parent="rings" instance=ExtResource("3_h2yge")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -30)
+
+[node name="obj_ring2" parent="rings" instance=ExtResource("3_h2yge")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -20)
+
+[node name="obj_ring3" parent="rings" instance=ExtResource("3_h2yge")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -10)
+
+[node name="obj_bird" parent="." instance=ExtResource("3_1bvp3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.01069, -0.925034)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.988762, 0.149501, 0, -0.149501, 0.988762, 0, 0.566581, 8.81177)
+current = true
+fov = 45.0
+script = ExtResource("4_1bvp3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="scr_game" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="label_score" type="Label" parent="CanvasLayer/scr_game"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "10"
+label_settings = SubResource("LabelSettings_1bvp3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-2.68934e-08, -0.788333, 0.615249, -3.44591e-08, 0.615249, 0.788333, -1, 0, -4.37114e-08, 0, 2.87462, 2.76878)
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_lquwl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.35, -10.1179)
+mesh = SubResource("PlaneMesh_1bvp3")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[connection signal="area_entered" from="obj_bird" to="." method="_on_obj_bird_area_entered"]

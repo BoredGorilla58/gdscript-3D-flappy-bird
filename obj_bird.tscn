@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://bi5cpvsm7j33w"]
+
+[ext_resource type="Script" uid="uid://dhmeikm76lldm" path="res://obj_bird.gd" id="1_7hsdl"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_0xm2m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.997072, 0.545305, 1.54018e-06, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_h2yge"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_1bvp3"]
+size = Vector3(2, 0.1, 1)
+
+[node name="obj_bird" type="Area3D"]
+script = ExtResource("1_7hsdl")
+force_gravity = 0.07
+force_fly = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_0xm2m")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_lquwl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_h2yge")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.439613, 0)
+mesh = SubResource("BoxMesh_1bvp3")
